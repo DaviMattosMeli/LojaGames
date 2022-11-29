@@ -13,7 +13,7 @@ public interface ProdutoRepository extends JpaRepository<Produto,Long> {
 
     public List<Produto> findAllByDescricaoContainsIgnoreCase(@Param("descricao") String descricao);
 
-    public List<Produto> findAllByValorGreaterThanOrderByValor(Double valorMaior);
+    public List<Produto> findAllByValorGreaterThanOrderByValor(Double valor);
 
     public List<Produto> findAllByValorIsLessThanOrderByValor(Double valor);
 
