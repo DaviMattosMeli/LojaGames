@@ -1,13 +1,15 @@
 package com.lojagames.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.format.annotation.NumberFormat;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name="tb_produtos")
@@ -32,6 +34,10 @@ public class Produto {
 
     @UpdateTimestamp
     private LocalDateTime data;
+
+    @ManyToOne
+    @JsonIgnoreProperties("categoria")
+    private Categoria categoria;
 
 
 
@@ -76,5 +82,13 @@ public class Produto {
 
     public void setData(LocalDateTime data) {
         this.data = data;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }
