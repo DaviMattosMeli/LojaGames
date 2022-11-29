@@ -76,7 +76,7 @@ public class ProdutoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePostagem(@PathVariable Long id){
+    public ResponseEntity<Void> deleteProduto(@PathVariable Long id){
         try {
             produtoRepository.deleteById(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
