@@ -17,6 +17,9 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "O Atributo Nome é Obrigatório!")
+    private String nome;
+
     @NotNull(message = "O Atributo Usuário é Obrigatório!")
     @Email(message = "O Atributo Usuário deve ser um email válido!")
     private String usuario;
@@ -38,6 +41,14 @@ public class Usuario {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getUsuario() {
