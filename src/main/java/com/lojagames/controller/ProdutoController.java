@@ -2,6 +2,7 @@ package com.lojagames.controller;
 
 
 import com.lojagames.model.Produto;
+import com.lojagames.repository.CategoriaRepository;
 import com.lojagames.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,19 +14,18 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/produtos")
-@CrossOrigin(origins="*", allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProdutoController {
 
     @Autowired
     private ProdutoRepository produtoRepository;
 
+    @Autowired
+    private CategoriaRepository categoriaRepository;
+
     @GetMapping
-    public  ResponseEntity<List<Produto>> getAll(){
-        try {
-            return ResponseEntity.ok(produtoRepository.findAll());
-        }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
+    public ResponseEntity<List<Produto>> getAll() {
+        return ResponseEntity.ok(produtoRepository.findAll());
     }
 
     @GetMapping("/{id}")
@@ -63,17 +63,24 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity<Produto> postProduto(@Valid @RequestBody Produto produto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(produtoRepository.save(produto));
+    public ResponseEntity<Produto> postPostagem(@Valid @RequestBody Produto produto) {
+
+        if (categoriaRepository.existsById(produto.getCategoria().getId())) //chec id do tema dentro da postagem
+            return ResponseEntity.status(HttpStatus.CREATED).body(produtoRepository.save(produto));
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     @PutMapping
-    public ResponseEntity<Produto> putProduto(@Valid @RequestBody Produto produto){
-        return produtoRepository.findById(produto.getId())
-                .map(res -> ResponseEntity.status(HttpStatus.OK)
-                        .body(produtoRepository.save(produto)))
-                .orElse(ResponseEntity.notFound().build());
-    }
+    public ResponseEntity<Produto> putPostagem(@Valid @RequestBody Produto produto) {
+
+        if (produtoRepository.existsById(produto.getId())) {//tem id da produto checa o tema
+            if (categoriaRepository.existsById(produto.getCategoria().getId())) // tem o categoria ele grava embaixo
+                return ResponseEntity.status(HttpStatus.OK).body(produtoRepository.save(produto));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+}
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduto(@PathVariable Long id){

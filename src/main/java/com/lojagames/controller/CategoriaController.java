@@ -1,7 +1,6 @@
 package com.lojagames.controller;
 
 import com.lojagames.model.Categoria;
-import com.lojagames.model.Produto;
 import com.lojagames.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,7 @@ import java.util.List;
 public class CategoriaController {
 
     @Autowired
-    CategoriaRepository categoriaRepository;
+   private CategoriaRepository categoriaRepository;
 
     @GetMapping
     public ResponseEntity<List<Categoria>> getAll(){

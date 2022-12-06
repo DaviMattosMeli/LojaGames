@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.List;
+
 
 @Entity
 @Table(name="tb_produtos")
@@ -43,8 +43,6 @@ public class Produto {
     @JsonIgnoreProperties("produto")
     private Usuario usuario;
 
-
-
     public Long getId() {
         return id;
     }
@@ -74,10 +72,7 @@ public class Produto {
     }
 
     public void setValor(double valor) {
-        if(valor > 0)
         this.valor = valor;
-        else
-            System.out.println("Valor não pode ser negativo");
     }
 
     public LocalDateTime getData() {
