@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name="tb_produtos")
-
 public class Produto {
 
     @Id
